@@ -1,0 +1,66 @@
+HƯỚNG DẪN ĐĂNG THIỆP LÊN MẠNG VÀ NHẬN LỜI CHÚC / XÁC NHẬN THAM DỰ
+=====================================================================
+
+PHẦN A. ĐĂNG THIỆP (miễn phí, khoảng 5 phút) — cách dễ nhất: Netlify Drop
+---------------------------------------------------------------------
+1. Chuẩn bị thư mục "wedding-invitation" gồm:
+   - index.html
+   - links.js
+   - thư mục images (ảnh hero.jpg, 1.jpg..., qr-chu-re.jpg, qr-co-dau.jpg, hoa-goc-tren.png, hoa-goc-duoi.png)
+   (Không cần file HUONG-DAN này, có thể xoá trước khi đăng.)
+2. Vào https://app.netlify.com/drop  (đăng ký bằng email hoặc Google, miễn phí).
+3. Kéo cả thư mục "wedding-invitation" thả vào khung. Vài giây sau có link dạng
+   https://ten-ngau-nhien.netlify.app
+4. Vào Site settings > Change site name để đổi thành tên dễ nhớ, ví dụ
+   https://ducvuong-thuphuong.netlify.app
+5. Gửi link cho khách. Muốn mỗi người một lời mời riêng, thêm ?to=Tên vào cuối:
+   https://ducvuong-thuphuong.netlify.app/?to=Anh%20Tuấn
+   (dấu cách viết là %20)
+Muốn sửa thiệp sau này: sửa file, rồi kéo thả lại thư mục lên Netlify (mục Deploys).
+
+Cách khác: GitHub Pages hoặc Cloudflare Pages (cũng miễn phí, link ổn định, gắn được tên miền riêng).
+
+
+PHẦN B. NHẬN KẾT QUẢ (lời chúc + ai đến, đi mấy người)
+------------------------------------------------------
+Khuyên dùng: Google Form + Google Sheet. Khách bấm "Gửi lời chúc" trên thiệp là
+dữ liệu vào bảng tính của bạn, không bị chuyển trang.
+
+Bước 1. Tạo Google Form (forms.google.com) với 4 câu hỏi, THEO ĐÚNG KIỂU này:
+   1) Họ và tên            — kiểu "Câu trả lời ngắn"
+   2) Bạn sẽ tham dự?      — kiểu "Câu trả lời ngắn" (không dùng trắc nghiệm, để khớp chữ trên thiệp)
+   3) Số người đi cùng     — kiểu "Câu trả lời ngắn"
+   4) Lời chúc             — kiểu "Đoạn"
+   Tab "Câu trả lời" > biểu tượng Google Sheets để tạo bảng tính nhận kết quả.
+   Bật thông báo email: tab "Câu trả lời" > ⋮ > "Nhận thông báo qua email về các câu trả lời mới".
+
+Bước 2. Lấy "action" và mã entry:
+   - Bấm ⋮ (góc trên phải) > "Nhận đường liên kết điền sẵn".
+   - Điền thử mỗi câu một chữ (ví dụ: AAA, BBB, CCC, DDD) > "Nhận đường liên kết" > "Sao chép đường liên kết".
+   - Dán link ra, nó có dạng:
+     https://docs.google.com/forms/d/e/1FAIpQLSxxxxxxxx/viewform?usp=pp_url&entry.111111=AAA&entry.222222=BBB&entry.333333=CCC&entry.444444=DDD
+   - action  = phần đầu, đổi "viewform" thành "formResponse":
+     https://docs.google.com/forms/d/e/1FAIpQLSxxxxxxxx/formResponse
+   - entry.111111 là ô Họ tên, entry.222222 là tham dự, entry.333333 là số người, entry.444444 là lời chúc.
+
+Bước 3. Mở index.html, tìm "rsvp:" trong khối CONFIG, điền:
+   google: { action:"https://docs.google.com/forms/d/e/1FAIpQLSxxxxxxxx/formResponse",
+             name:"entry.111111", attend:"entry.222222", guests:"entry.333333", wish:"entry.444444" },
+
+Bước 4. Đăng lại thiệp, tự gửi thử một lời chúc và kiểm tra trong Google Sheet.
+
+Lưu ý:
+- Trang hiện chữ "Đã gửi!" ngay cả khi Google từ chối (đây là giới hạn của cách gửi này), nên
+  LUÔN gửi thử trước khi phát link cho khách.
+- Dữ liệu khách nhập chỉ gửi vào Google Form của bạn.
+
+Cách đơn giản hơn nếu không muốn tạo Form: điền email hoặc Zalo ở rsvp.email / rsvp.zalo.
+Khách bấm gửi sẽ mở thư/Zalo với nội dung soạn sẵn, nhưng khách phải tự bấm gửi nên dễ bị bỏ sót.
+
+
+PHẦN C. LƯU Ý CHUNG
+-------------------
+- Nhạc nền: file .mp3 đặt trong thư mục music/ rồi điền musicUrl; trình duyệt chỉ phát sau khi khách bấm "Mở thiệp".
+- Bản đồ: dán link vào file links.js.
+- Quà mừng: bỏ ảnh QR vào images/ đúng tên, kiểm tra khách quét được trước khi gửi rộng rãi.
+- Thiệp đăng công khai: ai có link đều xem được. Không ghi số điện thoại, số tài khoản đầy đủ nếu không cần.
